@@ -10,18 +10,10 @@ import XCTest
 
 class PokeDextroTests: XCTestCase {
 
-    override func setUpWithError() throws {
-        
-    }
-
-    override func tearDownWithError() throws {
-        
-    }
-
     func testExample() async throws {
-        let loader = PokemonLoader()
-        await loader.load()
-        XCTAssertGreaterThan(loader.pokemonData.count, 1)
+        let dataModel = PokemonsDataModel()
+        await dataModel.fetchPokemons()
+        XCTAssertGreaterThan(dataModel.pokemons.count, 1)
     }
     
     func testAPINetwork() async throws {
@@ -36,5 +28,13 @@ class PokeDextroTests: XCTestCase {
         XCTAssertGreaterThan(pokemonDataModel.pokemons.count, 1)
         pokemonDataModel.clearCachePokemons()
         XCTAssertEqual(pokemonDataModel.pokemons.count, 0)
+    }
+    
+    func testFetchNextPage() async throws {
+        let pokemonDataModel = PokemonsDataModel()
+        await pokemonDataModel.fetchPokemons()
+        let lastPokemon = pokemonDataModel.pokemons.last
+        await pokemonDataModel.fetchMoreContentIfNeeded(currentItem: lastPokemon)
+        XCTAssertGreaterThan(pokemonDataModel.pokemons.count, 10)
     }
 }

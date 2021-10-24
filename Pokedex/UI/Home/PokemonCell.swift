@@ -30,7 +30,7 @@ struct PokemonCell: View {
                             .aspectRatio(contentMode: .fit)
                             .frame(width: imageWidth)
                             .padding(.trailing, 10)
-                        PokemonDescription(pokemon: pokemon)
+                        PokemonDescriptionView(pokemon: pokemon)
                         Spacer()
                     }
                 case .failure(let error):

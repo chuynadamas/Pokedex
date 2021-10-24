@@ -17,7 +17,8 @@ struct ErrorView: View {
 
 struct ErrorView_Previews: PreviewProvider {
     static var previews: some View {
-        ErrorView(error: PokemonError.noData)      .previewLayout(.sizeThatFits)
+        ErrorView(error: NetworkError.noData)
+            .previewLayout(.sizeThatFits)
             .padding()
     }
 }

@@ -1,5 +1,5 @@
 //
-//  PokemonDescription.swift
+//  PokemonDescriptionView.swift
 //  PokeDextro (iOS)
 //
 //  Created by chuynadamas on 10/23/21.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct PokemonDescription: View {
+struct PokemonDescriptionView: View {
     let pokemon: Pokemon
     
     private var attributedText: AttributedString {
@@ -33,7 +33,7 @@ struct PokemonDescription: View {
 
 struct PokemonDescription_Previews: PreviewProvider {
     static var previews: some View {
-        PokemonDescription(pokemon: Pokemon.sample)
+        PokemonDescriptionView(pokemon: Pokemon.sample)
             .previewLayout(.sizeThatFits)
             .padding()
     }
