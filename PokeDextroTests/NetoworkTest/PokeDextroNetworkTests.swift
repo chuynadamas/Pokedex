@@ -29,4 +29,12 @@ class PokeDextroTests: XCTestCase {
         await pokemonDataModel.fetchPokemons()
         XCTAssertGreaterThan(pokemonDataModel.pokemons.count, 1)
     }
+    
+    func testClearCache() async throws {
+        let pokemonDataModel = PokemonsDataModel()
+        await pokemonDataModel.fetchPokemons()
+        XCTAssertGreaterThan(pokemonDataModel.pokemons.count, 1)
+        pokemonDataModel.clearCachePokemons()
+        XCTAssertEqual(pokemonDataModel.pokemons.count, 0)
+    }
 }

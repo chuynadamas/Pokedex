@@ -108,6 +108,7 @@ extension PokemonError: LocalizedError {
     }
 }
 
+// MARK: - Pokemon Loader Old implementation
 class PokemonLoader: ObservableObject {
     @Published private(set) var pokemonData: [Pokemon] = []
     

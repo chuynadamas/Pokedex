@@ -14,9 +14,14 @@ struct PokemonList: View {
         List {
             ForEach(dataModel.pokemons) { pokemon in
                 PokemonCell(pokemon: pokemon)
+                    .task {
+                        await dataModel.fetchMoreContentIfNeeded(currentItem: pokemon)
+                    }
             }
         }.task {
             await dataModel.fetchPokemons()
+        }.refreshable {
+            await dataModel.refreshPokemonsList()
         }
     }
 }
