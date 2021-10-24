@@ -1,5 +1,5 @@
 //
-//  PokemonData.swift
+//  Pokemon.swift
 //  PokeDextro
 //
 //  Created by chuynadamas on 10/23/21.
@@ -26,7 +26,6 @@ public struct Pokemon: Identifiable {
         self.id = id
         self.name = name
     }
-    
 }
 
 extension Pokemon: Decodable {
