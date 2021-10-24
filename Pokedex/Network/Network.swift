@@ -1,5 +1,5 @@
 //
-//  PokemonLoader.swift
+//  Network.swift
 //  PokeDextro
 //
 //  Created by chuynadamas on 10/23/21.
@@ -29,7 +29,7 @@ extension NetworkError: LocalizedError {
     }
 }
 
-// MARK: - Network Request
+// MARK: - Network Request Protocol
 public protocol NetworkRequest: AnyObject {
     associatedtype ModelType
     
@@ -61,14 +61,12 @@ public class APIRequest<Resource: APIResource> {
 }
 
 extension APIRequest: NetworkRequest {
-    public func decode(_ data: Data) -> [Resource.ModelType]? {
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .secondsSince1970
-        let wrapper = try? decoder.decode(Wrapper<Resource.ModelType>.self, from: data)
-        return wrapper?.results
+    public func decode(_ data: Data) -> Resource.ModelType? {
+        let decoded = try? JSONDecoder().decode(ModelType.self, from: data)
+        return decoded
     }
     
-    public func execute() async throws -> [Resource.ModelType]? {
+    public func execute() async throws -> Resource.ModelType? {
         return try? await load(resource.url)
     }
 }
@@ -76,6 +74,7 @@ extension APIRequest: NetworkRequest {
 //MARK: - APIPokemonResource
 public protocol APIResource {
     associatedtype ModelType: Decodable
+    
     var methodPath: String { get }
     var offset: Int { get }
     var limit: Int { get }
@@ -93,8 +92,9 @@ public extension APIResource {
     }
 }
 
+// MARK: - PokemonResources
 public struct PokemonsResource: APIResource {
-    public typealias ModelType = Pokemon
+    public typealias ModelType = PokemonResponse
     
     public var methodPath: String {
         return "/api/v2/pokemon"

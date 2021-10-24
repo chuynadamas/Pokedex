@@ -7,13 +7,6 @@
 
 import Foundation
 
-struct PokemonResponse: Decodable {
-    let count: Int
-    let next: String?
-    let previous: String?
-    let results: [Pokemon]
-}
-
 public struct Pokemon: Identifiable {
     public let id: Int
     public let name: String
@@ -52,8 +45,11 @@ extension Pokemon {
 }
 
 // MARK: - Wrapper
-public struct Wrapper<T: Decodable>: Decodable {
-    let results: [T]
+public struct PokemonResponse: Decodable {
+    let count: Int
+    let next: String?
+    let previous: String?
+    public let results: [Pokemon]
 }
 
 extension Pokemon {

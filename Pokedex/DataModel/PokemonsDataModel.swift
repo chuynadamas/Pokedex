@@ -29,7 +29,8 @@ public class PokemonsDataModel: ObservableObject {
         self.request = request
         
         do {
-            pokemons += try await request.execute() ?? []
+            let pokemonsResponse = try await request.execute()
+            pokemons += pokemonsResponse?.results ?? []
             self.offset += 10
         } catch {
             print(error.localizedDescription)

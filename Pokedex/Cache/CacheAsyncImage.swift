@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct CacheAsyncImage<Content>: View where Content: View {
-    
     private let url: URL
     private let scale: CGFloat
     private let transaction: Transaction
@@ -67,7 +66,6 @@ struct CacheAsyncImage_Previews: PreviewProvider {
         }
     }
 }
-
 
 fileprivate class ImageCache {
     static private var cache: [URL: Image] = [:]
