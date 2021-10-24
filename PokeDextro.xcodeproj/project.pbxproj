@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BE30E23E2725DA2000EF3069 /* PokemonsDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE30E23D2725DA2000EF3069 /* PokemonsDataModel.swift */; };
 		BEE716812724D88E00A286C3 /* PokeDextroApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEE716712724D88C00A286C3 /* PokeDextroApp.swift */; };
 		BEE716832724D88E00A286C3 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEE716722724D88C00A286C3 /* ContentView.swift */; };
 		BEE716852724D88E00A286C3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BEE716732724D88E00A286C3 /* Assets.xcassets */; };
@@ -33,6 +34,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		BE30E23D2725DA2000EF3069 /* PokemonsDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonsDataModel.swift; sourceTree = "<group>"; };
 		BEE716712724D88C00A286C3 /* PokeDextroApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokeDextroApp.swift; sourceTree = "<group>"; };
 		BEE716722724D88C00A286C3 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		BEE716732724D88E00A286C3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -68,6 +70,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		BE30E23C2725DA0E00EF3069 /* DataModel */ = {
+			isa = PBXGroup;
+			children = (
+				BE30E23D2725DA2000EF3069 /* PokemonsDataModel.swift */,
+			);
+			path = DataModel;
+			sourceTree = "<group>";
+		};
 		BEE7166B2724D88C00A286C3 = {
 			isa = PBXGroup;
 			children = (
@@ -80,6 +90,7 @@
 		BEE716702724D88C00A286C3 /* Pokedex */ = {
 			isa = PBXGroup;
 			children = (
+				BE30E23C2725DA0E00EF3069 /* DataModel */,
 				BEE716AC2724F1A600A286C3 /* Utils */,
 				BEE716972724DAC500A286C3 /* Model */,
 				BEE716B42724FC1700A286C3 /* Cache */,
@@ -273,6 +284,7 @@
 				BEE716992724DACF00A286C3 /* PokemonData.swift in Sources */,
 				BEE716B02724F1CC00A286C3 /* Data+Extension.swift in Sources */,
 				BEE7169E2724E39900A286C3 /* PokemonDescription.swift in Sources */,
+				BE30E23E2725DA2000EF3069 /* PokemonsDataModel.swift in Sources */,
 				BEE716832724D88E00A286C3 /* ContentView.swift in Sources */,
 				BEE716812724D88E00A286C3 /* PokeDextroApp.swift in Sources */,
 				BEE716952724DA7700A286C3 /* PokemonLoader.swift in Sources */,

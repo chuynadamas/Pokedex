@@ -8,25 +8,22 @@
 import SwiftUI
 
 struct PokemonList: View {
-    @ObservedObject var loader: PokemonLoader
+    @ObservedObject var dataModel: PokemonsDataModel = PokemonsDataModel()
     
     var body: some View {
         List {
-            ForEach(loader.pokemonData) { pokemon in
+            ForEach(dataModel.pokemons) { pokemon in
                 PokemonCell(pokemon: pokemon)
-                .task {
-                    if pokemon == loader.pokemonData.last {
-                        await loader.nextPage()
-                    }
-                }
             }
+        }.task {
+            await dataModel.fetchPokemons()
         }
     }
 }
 
 struct PokemonList_Previews: PreviewProvider {
     static var previews: some View {
-        PokemonList(loader: PokemonLoader())
+        PokemonList()
             .previewLayout(.sizeThatFits)
             .padding()
     }

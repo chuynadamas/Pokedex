@@ -8,6 +8,86 @@
 import Foundation
 import Combine
 
+enum NetworkError: Error {
+    case serverError
+    case noData
+}
+
+// MARK: - Network Request
+public protocol NetworkRequest: AnyObject {
+    associatedtype ModelType
+    
+    func decode(_ data: Data) -> ModelType?
+    func execute() async throws -> ModelType?
+}
+
+public extension NetworkRequest {
+    fileprivate func load(_ url: URL) async throws -> ModelType? {
+        let (data, response) = try await URLSession.shared.data(from: url)
+        
+        guard (response as? HTTPURLResponse)?.statusCode == 200
+        else { throw NetworkError.serverError }
+        
+        guard let decoded = self.decode(data)
+        else { throw NetworkError.noData }
+        
+        return decoded
+    }
+}
+
+// MARK: - APIRequest
+public class APIRequest<Resource: APIResource> {
+    let resource: Resource
+    
+    init(resource: Resource) {
+        self.resource = resource
+    }
+}
+
+extension APIRequest: NetworkRequest {
+    public func decode(_ data: Data) -> [Resource.ModelType]? {
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .secondsSince1970
+        let wrapper = try? decoder.decode(Wrapper<Resource.ModelType>.self, from: data)
+        return wrapper?.results
+    }
+    
+    public func execute() async throws -> [Resource.ModelType]? {
+        return try? await load(resource.url)
+    }
+}
+
+//MARK: - APIPokemonResource
+public protocol APIResource {
+    associatedtype ModelType: Decodable
+    var methodPath: String { get }
+    var offset: Int { get }
+    var limit: Int { get }
+}
+
+public extension APIResource {
+    var url : URL {
+        var components = URLComponents(string: "https://pokeapi.co")!
+        components.path = methodPath
+        components.queryItems = [
+            URLQueryItem(name: "limit", value: String(limit)),
+            URLQueryItem(name: "offset", value: String(offset))
+        ]
+        return components.url!
+    }
+}
+
+public struct PokemonsResource: APIResource {
+    public typealias ModelType = Pokemon
+    
+    public var methodPath: String {
+        return "/api/v2/pokemon"
+    }
+    
+    public var offset: Int
+    public var limit: Int
+}
+
 enum PokemonError: Error {
     case serverError
     case noData

@@ -8,17 +8,10 @@
 import SwiftUI
 
 struct PokedexView: View {
-    @ObservedObject private var loader = PokemonLoader()
-    
     var body: some View {
         NavigationView {
-            PokemonList(loader: loader)
+            PokemonList()
                 .navigationTitle("PokeDex")
-                .task {
-                    await loader.load()
-                }.refreshable {
-                    await loader.refresh()
-                }
         }.navigationViewStyle(StackNavigationViewStyle())
     }
 }

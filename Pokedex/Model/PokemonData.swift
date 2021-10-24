@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import UIKit
 
 struct PokemonResponse: Decodable {
     let count: Int
@@ -15,16 +14,12 @@ struct PokemonResponse: Decodable {
     let results: [Pokemon]
 }
 
-struct Pokemon: Decodable, Identifiable {
-    let id: UUID
-    let name: String
+public struct Pokemon: Identifiable {
+    public let id: UUID
+    public let name: String
     
     var url: URL {
         URL(string: "https://img.pokemondb.net/artwork/large/\(name).jpg")!
-    }
-    
-    private enum PokemonKeys: String, CodingKey {
-        case name
     }
     
     init(id: UUID, name: String) {
@@ -32,21 +27,32 @@ struct Pokemon: Decodable, Identifiable {
         self.name = name
     }
     
-    init(from decoder: Decoder) throws {
+}
+
+extension Pokemon: Decodable {
+    private enum PokemonKeys: String, CodingKey {
+        case name
+    }
+    
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: PokemonKeys.self)
         self.name = try container.decode(String.self, forKey: .name)
         self.id = UUID()
     }
 }
 
-extension Pokemon {
-    static let sample = Pokemon(id: UUID(), name: "bulbasaur")
-    //Self.init(id: UUID(), name: "bulbasaur")
-}
-
 extension Pokemon: Equatable {
-    static func == (lhs: Self, rhs: Self) -> Bool {
+    public static func == (lhs: Self, rhs: Self) -> Bool {
         return lhs.id == rhs.id
     }
 }
 
+
+extension Pokemon {
+    static let sample = Self.init(id: UUID(), name: "bulbasaur")
+}
+
+// MARK: - Wrapper
+public struct Wrapper<T: Decodable>: Decodable {
+    let results: [T]
+}

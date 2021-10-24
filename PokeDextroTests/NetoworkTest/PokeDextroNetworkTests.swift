@@ -23,4 +23,10 @@ class PokeDextroTests: XCTestCase {
         await loader.load()
         XCTAssertGreaterThan(loader.pokemonData.count, 1)
     }
+    
+    func testAPINetwork() async throws {
+        let pokemonDataModel = PokemonsDataModel()
+        await pokemonDataModel.fetchPokemons()
+        XCTAssertGreaterThan(pokemonDataModel.pokemons.count, 1)
+    }
 }
